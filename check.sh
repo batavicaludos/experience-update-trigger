@@ -18,17 +18,15 @@ parse_date ()
 
 current_date=$(date +"$DATE_FORMAT")
 current_date_ms=$(parse_date $current_date)
-echo $current_date
-echo $current_date_ms
 
-response=$(curl https://develop.roblox.com/v1/universes/2639068927)
-echo "$response"
-
+response=$(curl https://games.roblox.com/v1/games?universeIds=2639068927)
 updated_at=$(parse_json_field "$response" 'updated') || {
   echo 'Something went wrong while parsing the field'
   exit
 }
 updated_at_ms=$(parse_date $updated_at)
-echo $updated_at
-echo $updated_at_ms
-echo $(( $current_date_ms - $updated_at_ms ))
+
+difference=$(( $current_date_ms - $updated_at_ms ))
+if (( $difference <= $CHECK_INTERVAL )); then
+  echo 'triggered'
+fi
