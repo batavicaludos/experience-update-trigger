@@ -1,11 +1,9 @@
 #!/bin/bash
 CHECK_INTERVAL=$(( 60 * 1000 ))
-DATE_FORMAT='%Y-%m-%dT%H:%M:%S.%3N%:z'
 
 parse_json_field ()
 {
-  value=$(python3 parse_json_field.py "$1" $2)
-  if [ $? -ne 0 ]; then
+  if ! value=$(python3 parse_json_field.py "$1" "$2"); then
     return 1
   fi
   echo "$value"
@@ -13,20 +11,19 @@ parse_json_field ()
 
 parse_date ()
 {
-  echo $(date -d"$1" +'%s%3N')
+  date -d"$1" +'%s%3N'
 }
 
-current_date=$(date +"$DATE_FORMAT")
-current_date_ms=$(parse_date $current_date)
+current_date=$(date +'%Y-%m-%dT%H:%M:%S.%3N%:z')
+current_date_ms=$(parse_date "$current_date")
 
-response=$(curl https://games.roblox.com/v1/games?universeIds=2639068927)
+response=$(curl "https://games.roblox.com/v1/games?universeIds=$UNIVERSE_ID")
 updated_at=$(parse_json_field "$response" 'updated') || {
   echo 'Something went wrong while parsing the field'
   exit
 }
-updated_at_ms=$(parse_date $updated_at)
+updated_at_ms=$(parse_date "$updated_at")
 
-difference=$(( $current_date_ms - $updated_at_ms ))
-if (( $difference <= $CHECK_INTERVAL )); then
-  echo 'triggered'
+if (( current_date_ms - updated_at_ms <= CHECK_INTERVAL )); then
+  bash actions/"$ACTION_NAME".sh "$UNIVERSE_ID"
 fi

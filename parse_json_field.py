@@ -5,5 +5,5 @@ try:
     # "Unexpected UTF-8 BOM (decode using utf-8-sig): line 1 column 1 (char 0)"
     # occuring when the Roblox API returns an error response.
     print(json.loads(sys.argv[1].encode("utf-8").decode("utf-8-sig"))["data"][0][sys.argv[2]])
-except KeyError:
+except (IndexError, KeyError):
     sys.exit(1)
