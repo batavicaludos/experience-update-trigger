@@ -15,7 +15,7 @@ progress.
 
 1. Copy `.env.example` to `.env` and enter the fields. If you're going to use 
    the `trigger_github_actions` action, uncomment all those variables. See the 
-   [GitHub Docs][2] for what each variable entails.
+   [GitHub Docs][6] for what each variable entails.
 2. To build the Docker image, execute:
    ```
    docker build . -t experience-update-trigger
@@ -33,7 +33,7 @@ progress.
 The cronjob also triggers on AutoSaves. 
 
 If in the future I find a better endpoint that for example includes information 
-about when a game has lastly been**published**, this project could be improved 
+about when a game has lastly been **published**, this project could be improved 
 to using that. If you happen to know such endpoint on the Roblox API, feel free 
 to open an [issue][8]!
 
