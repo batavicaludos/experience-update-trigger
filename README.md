@@ -1,4 +1,4 @@
-# place-update-trigger
+# experience-update-trigger
 
 Cronjob that runs a bash script when a Roblox experience has been updated.
 
