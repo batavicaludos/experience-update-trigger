@@ -1,8 +1,15 @@
-FROM ubuntu:20.04
+FROM alpine:3.14.0
 
-RUN apt-get update && apt-get install -y curl python3
+RUN apk update && apk add --no-cache bash coreutils curl python3
 
 WORKDIR /opt/app
 COPY . .
 
-CMD ["bash", "check.sh"]
+RUN cat cronjob | crontab -
+
+RUN chmod -R +x actions check.sh entrypoint.sh parse_json_field.py
+
+ENTRYPOINT ["bash", "entrypoint.sh"]
+
+# Default action
+CMD ["trigger_github_actions"]

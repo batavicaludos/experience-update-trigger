@@ -17,10 +17,10 @@ parse_date ()
 current_date=$(date +'%Y-%m-%dT%H:%M:%S.%3N%:z')
 current_date_ms=$(parse_date "$current_date")
 
-response=$(curl "https://games.roblox.com/v1/games?universeIds=$UNIVERSE_ID")
+response=$(curl -s "https://games.roblox.com/v1/games?universeIds=$UNIVERSE_ID")
 updated_at=$(parse_json_field "$response" 'updated') || {
-  echo 'Something went wrong while parsing the field'
-  exit
+  echo "$(date) - Something went wrong while parsing the field"
+  exit 1
 }
 updated_at_ms=$(parse_date "$updated_at")
 
