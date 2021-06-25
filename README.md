@@ -8,9 +8,8 @@ progress.
 ## Prerequisites
 
 * [Docker][1]
-* Or, **if your host machine supports cron**: [Python3][2], [bash][3], 
-  [coreutils][4] and [curl][5] (of which some/all may have been installed by 
-  default).
+* Or, **if your host machine supports cron**: [bash][2], [coreutils][3], 
+  [curl][4] and [jq][5] (of which some may have been installed by default).
 
 ## Installation
 
@@ -39,10 +38,10 @@ to using that. If you happen to know such endpoint on the Roblox API, feel free
 to open an [issue][8]!
 
 [1]: https://docs.docker.com/get-docker/
-[2]: https://www.python.org/downloads/
-[3]: https://www.gnu.org/software/bash/
-[4]: https://www.gnu.org/software/coreutils/
-[5]: https://curl.se/download.html
+[2]: https://www.gnu.org/software/bash/
+[3]: https://www.gnu.org/software/coreutils/
+[4]: https://curl.se/download.html
+[5]: https://stedolan.github.io/jq/download/
 [6]: https://docs.github.com/en/rest/reference/actions#create-a-workflow-dispatch-event
 [7]: https://github.com/batavicaludos/experience-update-trigger/tree/main/actions
 [8]: https://github.com/batavicaludos/experience-update-trigger/issues/new

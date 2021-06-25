@@ -1,14 +1,6 @@
 #!/bin/bash
 CHECK_INTERVAL=$(( 60 * 1000 ))
 
-parse_json_field ()
-{
-  if ! value=$(python3 parse_json_field.py "$1" "$2"); then
-    return 1
-  fi
-  echo "$value"
-}
-
 parse_date ()
 {
   date -d"$1" +'%s%3N'
@@ -17,9 +9,8 @@ parse_date ()
 current_date=$(date +'%Y-%m-%dT%H:%M:%S.%3N%:z')
 current_date_ms=$(parse_date "$current_date")
 
-response=$(curl -s "https://games.roblox.com/v1/games?universeIds=$UNIVERSE_ID")
-updated_at=$(parse_json_field "$response" 'updated') || {
-  echo "$(date) - Something went wrong while parsing the field"
+updated_at=$(curl -s "https://games.roblox.com/v1/games?universeIds=$UNIVERSE_ID" | jq -er '.data[0].updated') || {
+  echo "$(date) - Could not get last updated date"
   exit 1
 }
 updated_at_ms=$(parse_date "$updated_at")
